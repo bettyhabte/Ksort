@@ -1,0 +1,162 @@
+
+SORT K-SORTED ARRAY
+OVERALL PROCEDURE
+
+Allow the user to enter the n elements
+parse the numbers
+build the array onto min-heap
+then sort it using the min-heap, but since sorting is in defending order, reverse it
+once we have the sorted array, randomize the array in to k-sorted array using rand()
+sort the k-sorted array using min heap and print out
+
+
+
+
+
+Build min heap
+	the min heap function starts at the half of the length of the array
+	then min heapify
+
+    build_min_heap(int arr[], int n)
+
+	int start = floor(n/2);
+	
+	for i = star to 0	
+		min_heapify(arr, n, i)
+	
+	
+
+left function returns the index of the left child
+	 left(int i)
+		return (2*(i+1)-1)
+	
+
+right function returns the index of the right child
+	 right(int i)
+		return (2*(i+1))
+
+
+
+the min-heapify function checks the left and the right value of the parent
+ check i with the left(the smallest)
+ check i with the right(the smallest)
+ check if the parent is not the smallest
+ if the children is the smallest
+ then swap, and minheapify the smallest
+ 
+ 	min_heapify(  arr, n,i )
+
+	 	l = left(i);
+	 	r = right(i);
+	 	smallest;
+	
+		if( l < n and (arr[l]<arr[i]))
+	
+			smallest = l;
+		else
+			smallest = i;
+	
+		if( r < n and (arr[r] < arr[smallest]))
+	
+			smallest = r;
+		if( smallest != i)
+
+			swap(arr,i, smallest);
+			min_heapify(arr, n, smallest);
+	
+
+swap the two numbers
+	 swap(int  arr[], int  x, int  y)
+
+	
+		int temp;
+	
+		temp = arr[x];
+		arr[x]=arr[y];
+		arr[y] = temp;
+	
+
+first it calls build_min_heap function   then sort
+heapsort(arr, n)
+	build_min_heap(arr, n);
+
+	sort it by swaping the first and the last number
+	then min-heapify the rest(remove the last item
+
+	for i = n-1 to 0
+		swap(arr, i, 0);
+		min_heapify(arr, i, 0);
+
+	
+
+
+int main()
+{
+	first request the input then parse it
+
+	cout << "please enter the numbers" << endl;
+	string input;
+	
+	
+	getline gets the entire line until hit enter
+	getline(cin, input)
+
+	since the input from the user may consist space, 
+	this will count the numbers by checking the spaces
+
+	int n = 1;
+	for( int i= 0; i< input.length(); i++)
+		if (input[i] == ' ')
+			n++;
+
+	
+	int *numbers = new int[n];
+	
+	istringstream stream(input);
+
+	  
+	gets the numbers place it in temp
+	int i=0;
+	while( stream >> temp)
+
+		numbers[i] = temp;
+		i++;
+	allow the user to input k
+	cout <<"please enter your k value"<<endl;
+	cin>>k;
+
+
+	calls heap sort prints out the sorted array
+	heapsort(numbers, n);
+	
+	revers the array to make it accending order
+	
+		for(i=0; i<((n)/2); i++)
+			swap(numbers, i, n-1-i);
+		
+	
+		
+this will generate k-sorted array using rand() function
+	int r;
+	for( int i=0; i<n-k-1;)
+		r = rand()%k;
+		swap(numbers, numbers[i], numbers[i+r]);
+		i = i + k + 1;
+	
+	cout<<"random k"<<endl;
+	
+	for(int i = 0; i < n; i++)
+		cout<<numbers[i]<<endl;
+	
+then sort the k-sorted array
+	heapsort(numbers, n);
+	
+	
+revers the array to make it accending order
+	
+	
+	cout<<"sort after k-sort"<<endl;
+	for(int i = 0; i < n; i++)
+		cout<<numbers[i]<<endl;
+		
+}
